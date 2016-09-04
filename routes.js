@@ -50,7 +50,7 @@ router.post('/webhook', (req, res) => {
          **/
         data.entry.forEach(entry => {
             let { id, time } = entry;
-            logger.debug(`Received webhook callback from page ${id} at ${timestamp}.`);
+            logger.debug(`Received webhook callback from page ${id} at ${time}.`);
 
             /**
              *  Each item in `entry.messaging` corresponds to messages that
