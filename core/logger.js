@@ -5,14 +5,10 @@ let logger = new winston.Logger({
     transports: [
         new winston.transports.Console(),
         new winston.transports.File({
-            name: 'debug-log',
-            filename: 'logs/devquotebot-debug.log',
-            level: 'debug'
-        }),
-        new winston.transports.File({
-            name: 'error-log',
-            filename: 'logs/devquotebot-error.log',
-            level: 'error'
+            filename: 'logs/devquotebot.log',
+            level: 'debug',
+            json: false,
+            maxsize: 10000
         })
     ]
 });
