@@ -1,6 +1,6 @@
 let express = require('express');
-let winston = require('winston');
 let config = require('./core/config');
+let logger = require('./core/logger');
 let handlers = require('./lib/handlers');
 
 
@@ -16,15 +16,15 @@ let router = new express.Router();
  *  not, we send an HTTP 403 response.
  **/
 router.get('/webhook', (req, res) => {
-    winston.debug('Received webhook verification request');
-    winston.debug(`hub.verify_token: ${req.query['hub.verify_token']}`);
-    winston.debug(`hub.challenge: ${req.query['hub.challenge']}`);
+    logger.debug('Received webhook verification request');
+    logger.debug(`hub.verify_token: ${req.query['hub.verify_token']}`);
+    logger.debug(`hub.challenge: ${req.query['hub.challenge']}`);
 
     if (req.query['hub.verify_token'] === config.get('FB_VERIFY_TOKEN')) {
-        winston.debug('Webhook verified. Sending back challenge value.');
+        logger.debug('Webhook verified. Sending back challenge value.');
         res.send(req.query['hub.challenge']);
     } else {
-        winston.error('Webhook verification failed.');
+        logger.error('Webhook verification failed.');
         res.sendStatus(403);
     }
 });
@@ -50,7 +50,7 @@ router.post('/webhook', (req, res) => {
          **/
         data.entry.forEach(entry => {
             let { id, time } = entry;
-            winston.debug(`Received webhook callback from page ${id} at ${timestamp}.`);
+            logger.debug(`Received webhook callback from page ${id} at ${timestamp}.`);
 
             /**
              *  Each item in `entry.messaging` corresponds to messages that
@@ -63,29 +63,29 @@ router.post('/webhook', (req, res) => {
              **/
             entry.messaging.forEach(messaging => {
                 if (messaging.message && !messaging.message.is_echo) {
-                    winston.debug('Received "Message Received" event.');
+                    logger.debug('Received "Message Received" event.');
                     handlers.messageReceived(messaging);
                 } else if (messaging.postback) {
-                    winston.debug('Received "Postback Received" event.');
+                    logger.debug('Received "Postback Received" event.');
                     handlers.postbackReceived(messaging);
                 } else if (messaging.optin) {
-                    winston.debug('Received "Authentication" event.');
+                    logger.debug('Received "Authentication" event.');
                     handlers.authentication(messaging);
                 } else if (messaging.account_linking) {
-                    winston.debug('Received "Account Linking" event.');
+                    logger.debug('Received "Account Linking" event.');
                     handlers.accountLinking(messaging);
                 } else if (messaging.delivery) {
-                    winston.debug('Received "Message Delivered" event.');
+                    logger.debug('Received "Message Delivered" event.');
                     handlers.messageDelivered(messaging);
                 } else if (messaging.read) {
-                    winston.debug('Received "Message Read" event.');
+                    logger.debug('Received "Message Read" event.');
                     handlers.messageRead(messaging);
                 } else if (messaging.message && messaging.message.is_echo) {
-                    winston.debug('Received "Message Echo" event.');
+                    logger.debug('Received "Message Echo" event.');
                     handlers.messageEcho(messaging);
                 } else {
-                    winston.error('Received unknown messaging event.');
-                    winston.error(messaging);
+                    logger.error('Received unknown messaging event.');
+                    logger.error(messaging);
                 }
             });
         });

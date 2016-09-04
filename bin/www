@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-let winston = require('winston');
 let config = require('../core/config');
+let logger = require('../core/logger');
 let app = require('../app');
 
 
 app.listen(config.get('PORT'),
-    () => winston.info(`Server running at port ${config.get('PORT')}`));
+    () => logger.info(`Server running at port ${config.get('PORT')}`));
