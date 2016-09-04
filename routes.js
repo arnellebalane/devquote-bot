@@ -1,6 +1,6 @@
 let express = require('express');
 let winston = require('winston');
-let config = require('./config');
+let config = require('./core/config');
 let handlers = require('./lib/handlers');
 
 

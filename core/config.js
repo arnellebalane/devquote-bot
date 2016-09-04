@@ -4,7 +4,7 @@ let nconf = require('nconf');
 nconf
     .argv()
     .env()
-    .file({ file: 'config.json' })
+    .file({ file: '../config.json' })
     .defaults({
         PORT: 3000
     });

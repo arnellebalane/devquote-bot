@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 let winston = require('winston');
+let config = require('../core/config');
 let app = require('../app');
-let config = require('../config');
 
 
 app.listen(config.get('PORT'),
