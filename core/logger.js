@@ -5,11 +5,6 @@ let logger = new winston.Logger({
     transports: [
         new winston.transports.Console(),
         new winston.transports.File({
-            name: 'info-log',
-            filename: 'logs/devquotebot-info.log',
-            level: 'info'
-        }),
-        new winston.transports.File({
             name: 'debug-log',
             filename: 'logs/devquotebot-debug.log',
             level: 'debug'
