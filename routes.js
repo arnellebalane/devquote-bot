@@ -63,25 +63,18 @@ router.post('/webhook', (req, res) => {
              **/
             entry.messaging.forEach(messaging => {
                 if (messaging.message && !messaging.message.is_echo) {
-                    logger.debug('Received "Message Received" event.');
                     handlers.messageReceived(messaging);
                 } else if (messaging.postback) {
-                    logger.debug('Received "Postback Received" event.');
                     handlers.postbackReceived(messaging);
                 } else if (messaging.optin) {
-                    logger.debug('Received "Authentication" event.');
                     handlers.authentication(messaging);
                 } else if (messaging.account_linking) {
-                    logger.debug('Received "Account Linking" event.');
                     handlers.accountLinking(messaging);
                 } else if (messaging.delivery) {
-                    logger.debug('Received "Message Delivered" event.');
                     handlers.messageDelivered(messaging);
                 } else if (messaging.read) {
-                    logger.debug('Received "Message Read" event.');
                     handlers.messageRead(messaging);
                 } else if (messaging.message && messaging.message.is_echo) {
-                    logger.debug('Received "Message Echo" event.');
                     handlers.messageEcho(messaging);
                 } else {
                     logger.error('Received unknown messaging event.');
