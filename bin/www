@@ -4,5 +4,7 @@ let logger = require('../core/logger');
 let app = require('../app');
 
 
+app.use((err, req, res, next) => logger.error(err));
+
 app.listen(config.get('PORT'),
     () => logger.info(`Server running at port ${config.get('PORT')}`));
