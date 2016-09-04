@@ -1,11 +1,11 @@
 {
   "name": "devquote-bot",
   "version": "0.0.0",
-  "description": "",
+  "description": "Facebook bot for Dev Quote page",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "./node_modules/.bin/nodemon bin/www"
   },
   "keywords": [],
   "author": "Arnelle Balane <arnellebalane@gmail.com> (arnellebalane.com)",
@@ -14,6 +14,8 @@
     "body-parser": "^1.15.1",
     "express": "^4.14.0",
     "morgan": "^1.7.0",
+    "nconf": "^0.8.4",
+    "nodemon": "^1.10.2",
     "request": "^2.72.0",
     "winston": "^2.2.0"
   }
